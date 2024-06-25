@@ -45,6 +45,20 @@ def test_create_user(client):
     }
 
 
+def test_get_user(client):
+    response = client.get('/users/1')
+
+    assert response.status_code == HTTPStatus.OK
+    assert response.json() == {
+        'username': 'testusername',
+        'email': 'test@test.com',
+        'id': 1,
+    }
+
+    response = client.get('/users/999')
+    assert response.status_code == HTTPStatus.NOT_FOUND
+
+
 def test_read_users(client):
     response = client.get('/users/')
 
